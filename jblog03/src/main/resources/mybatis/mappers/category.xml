@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="category">
+
+	<resultMap type="categoryvo" id="findAllList">
+		<id property="no" column="no" />
+		<result property="name" column="name" />
+		<result property="id" column="id" />
+	</resultMap>
+
+	<insert id="insert" parameterType="categoryvo">
+		<![CDATA[
+			insert into category
+			values (null, #{name }, #{id })
+		]]>
+	</insert>
+	
+	<select id="findAll" resultMap="findAllList" parameterType="string">
+		<![CDATA[
+			select no, name, id
+			from category
+			where id=#{id }
+		]]>
+	</select>
+	
+	<select id="findByName" parameterType="string" resultType="categoryvo">
+		<![CDATA[
+			select no, name, id
+			from category
+			where name=#{name }
+		]]>
+	</select>
+	
+	<select id="findCountByNo" parameterType="map" resultType="long">
+		<![CDATA[
+			select count(*)
+			from post a, category b
+			where a.category_no = b.no
+			and b.id = #{id}
+			and category_no = #{no};
+		]]>
+	</select>
+	
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			delete
+			from category
+			where no=#{no }
+		]]>
+	</delete>
+	
+</mapper>
